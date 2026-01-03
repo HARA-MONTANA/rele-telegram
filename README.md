@@ -8,7 +8,7 @@ Bot de Telegram en C++ (Arduino/ESP32) para encender/apagar un relé conectado a
 - Token del bot generado con `@BotFather`.
 
 ## Configuración rápida
-1. Copia `bot_rele.ino` a tu sketch de Arduino o abre la carpeta del repositorio en el IDE Arduino / PlatformIO.
+1. Abre la carpeta `bot_rele/` (que contiene `bot_rele.ino`) en el IDE de Arduino/PlatformIO. Si mueves el archivo, mantenlo dentro de una carpeta llamada **bot_rele** para que Arduino lo detecte correctamente.
 2. Completa tus credenciales en la parte superior del archivo:
    ```cpp
    const char* WIFI_SSID = "TU_SSID";
