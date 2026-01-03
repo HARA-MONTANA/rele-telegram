@@ -50,7 +50,7 @@ bool isChatAllowed(const String& chatId) {
   return chatId == ALLOWED_CHAT_ID;
 }
 
-void handleMessage(const TelegramMessage& msg) {
+void handleMessage(const telegramMessage& msg) {
   if (!isChatAllowed(msg.chat_id)) {
     bot.sendMessage(msg.chat_id, "Acceso no autorizado", "Markdown");
     return;
