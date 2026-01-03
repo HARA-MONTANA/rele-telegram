@@ -12,7 +12,7 @@ const char* BOT_TOKEN = "TU_BOT_TOKEN";
 const char* ALLOWED_CHAT_ID = "";  // Deja vacío para permitir cualquier chat
 
 constexpr uint8_t RELAY_PIN = 27;
-constexpr unsigned long BOT_POLL_INTERVAL = 1500;  // ms
+constexpr unsigned long BOT_POLL_INTERVAL = 200;  // ms - respuesta más rápida
 
 WiFiClientSecure secureClient;
 UniversalTelegramBot bot(BOT_TOKEN, secureClient);
@@ -23,7 +23,7 @@ void connectWifi() {
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
+    delay(100);
   }
 }
 
