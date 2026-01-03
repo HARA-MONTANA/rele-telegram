@@ -29,7 +29,7 @@ void connectWifi() {
 
 void setup() {
   pinMode(RELAY_PIN, OUTPUT);
-  digitalWrite(RELAY_PIN, LOW);  // Apaga el relé por defecto
+  digitalWrite(RELAY_PIN, HIGH);  // Relé apagado (activo en LOW)
 
   Serial.begin(115200);
   connectWifi();
@@ -39,7 +39,8 @@ void setup() {
 }
 
 void sendStatus(const String& chatId) {
-  String message = digitalRead(RELAY_PIN) == HIGH ? "Relé: ENCENDIDO" : "Relé: APAGADO";
+  const bool relayOn = digitalRead(RELAY_PIN) == LOW;  // Activo en LOW
+  String message = relayOn ? "Relé: ENCENDIDO" : "Relé: APAGADO";
   bot.sendMessage(chatId, message, "Markdown");
 }
 
@@ -57,10 +58,10 @@ void handleMessage(const telegramMessage& msg) {
   }
 
   if (msg.text == "/on" || msg.text == "on") {
-    digitalWrite(RELAY_PIN, HIGH);
+    digitalWrite(RELAY_PIN, LOW);  // Activa el relé (LOW)
     bot.sendMessage(msg.chat_id, "Relé encendido", "Markdown");
   } else if (msg.text == "/off" || msg.text == "off") {
-    digitalWrite(RELAY_PIN, LOW);
+    digitalWrite(RELAY_PIN, HIGH);  // Desactiva el relé (HIGH)
     bot.sendMessage(msg.chat_id, "Relé apagado", "Markdown");
   } else if (msg.text == "/status" || msg.text == "status") {
     sendStatus(msg.chat_id);
