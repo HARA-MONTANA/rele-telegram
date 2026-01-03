@@ -12,7 +12,7 @@ const char* BOT_TOKEN = "TU_BOT_TOKEN";
 const char* ALLOWED_CHAT_ID = "";  // Deja vacío para permitir cualquier chat
 
 constexpr uint8_t RELAY_PIN = 27;
-constexpr unsigned long BOT_POLL_INTERVAL = 200;  // ms - respuesta más rápida
+constexpr unsigned long BOT_POLL_INTERVAL = 500;  // ms - respuesta más rápida
 
 WiFiClientSecure secureClient;
 UniversalTelegramBot bot(BOT_TOKEN, secureClient);
@@ -21,10 +21,13 @@ int lastUpdateId = 0;
 
 void connectWifi() {
   WiFi.mode(WIFI_STA);
+  Serial.println("Conectando a WiFi...");
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
     delay(100);
   }
+  Serial.print("WiFi conectado, IP: ");
+  Serial.println(WiFi.localIP());
 }
 
 void setup() {
@@ -52,6 +55,11 @@ bool isChatAllowed(const String& chatId) {
 }
 
 void handleMessage(const telegramMessage& msg) {
+  Serial.print("Comando recibido (chat ");
+  Serial.print(msg.chat_id);
+  Serial.print("): ");
+  Serial.println(msg.text);
+
   if (!isChatAllowed(msg.chat_id)) {
     bot.sendMessage(msg.chat_id, "Acceso no autorizado", "Markdown");
     return;
@@ -59,9 +67,11 @@ void handleMessage(const telegramMessage& msg) {
 
   if (msg.text == "/on" || msg.text == "on") {
     digitalWrite(RELAY_PIN, LOW);  // Activa el relé (LOW)
+    Serial.println("Relé ENCENDIDO (LOW)");
     bot.sendMessage(msg.chat_id, "Relé encendido", "Markdown");
   } else if (msg.text == "/off" || msg.text == "off") {
     digitalWrite(RELAY_PIN, HIGH);  // Desactiva el relé (HIGH)
+    Serial.println("Relé APAGADO (HIGH)");
     bot.sendMessage(msg.chat_id, "Relé apagado", "Markdown");
   } else if (msg.text == "/status" || msg.text == "status") {
     sendStatus(msg.chat_id);

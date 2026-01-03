@@ -23,6 +23,7 @@ Bot de Telegram en C++ (Arduino/ESP32) para encender/apagar un relé conectado a
 - Envía `/start` para ver los comandos disponibles.
 - El relé funciona en **LOW**: envía `/on` para activarlo (pone el GPIO en LOW) y `/off` para desactivarlo (GPIO en HIGH).
 - Envía `/status` para consultar el estado actual.
-- El bot consulta nuevos mensajes cada ~200 ms para responder lo más rápido posible.
+- El bot consulta nuevos mensajes cada ~500 ms para responder rápidamente.
+- El monitor serie muestra cuándo se conecta a WiFi, qué comandos llegan y cada vez que se acciona el relé.
 
 > El cliente TLS se configura con `setInsecure()` para simplificar las pruebas; considera cargar el certificado de Telegram en entornos de producción.
